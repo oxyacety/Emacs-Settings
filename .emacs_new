@@ -20,14 +20,16 @@
  '(blink-cursor-mode nil)
  '(column-number-mode t)
  '(company-backends
-   '(company-bbdb company-eclim company-semantic company-xcode company-cmake company-capf company-files
+   '(company-bbdb company-eclim company-semantic company-xcode company-cmake company-files
 		  (company-dabbrev-code company-gtags company-etags company-keywords)
 		  company-oddmuse company-dabbrev))
  '(company-idle-delay 0.3)
  '(custom-enabled-themes '(leuven))
+ '(display-line-numbers-type 'relative)
  '(flycheck-c/c++-gcc-executable "C:\\MinGW\\bin\\gcc.exe")
- '(flycheck-check-syntax-automatically '(save))
- '(flycheck-idle-change-delay 5.0)
+ '(flycheck-check-syntax-automatically '(save idle-change idle-buffer-switch))
+ '(flycheck-highlighting-mode 'lines)
+ '(flycheck-idle-change-delay 0.5)
  '(fringe-mode '(nil . 0) nil (fringe))
  '(global-display-line-numbers-mode t)
  '(highlight-indent-guides-delay 0.5)
@@ -37,9 +39,11 @@
  '(lsp-java-java-path "C:\\Program Files\\Java\\jdk-16.0.2\\bin\\java.exe")
  '(lsp-java-server-install-dir "c:/Users/Sebastian/Downloads/java_lsp/")
  '(lsp-java-workspace-dir "")
+ '(lsp-ui-flycheck-list-position 'right)
+ '(lsp-ui-sideline-show-code-actions t)
+ '(lsp-ui-sideline-show-hover t)
  '(org-agenda-files '("c:/Users/Sebastian/Documents/OrgFiles"))
- '(package-selected-packages
-   '(lsp-ui dap-mode java-snippets lsp-java lsp-mode highlight-indent-guides flycheck eglot company))
+ '(package-selected-packages '(lsp-ui dap-mode lsp-java lsp-mode flycheck company))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces
@@ -47,7 +51,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "DejaVu Sans Mono" :foundry "outline" :slant normal :weight normal :height 98 :width normal)))))
+ '(default ((t (:family "DejaVu Sans Mono" :foundry "outline" :slant normal :weight normal :height 113 :width normal)))))
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (add-hook 'after-init-hook 'global-company-mode)
@@ -60,23 +64,7 @@
 (require 'ido)
 (ido-mode t)
 
-
-;; Activates highlight indent guides (turned off because of performance atm)
-;;(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
-
-
-;; Activate highlight-symbol mode
-;; global highlight-symbol mode should probably not be used
-(require 'highlight-symbol)
-(defun highlight-symbol-mode-on () (highlight-symbol-mode 1))
-
-(define-globalized-minor-mode
-global-highlight-symbol-mode
-highlight-symbol-mode
-highlight-symbol-mode-on)
-
-(global-highlight-symbol-mode 0)
-
+(yas-global-mode)
 
 (require 'lsp-mode)
 (add-hook 'prog-mode-hook #'lsp)
@@ -101,6 +89,12 @@ highlight-symbol-mode-on)
 
 ;; Display line numbers
 (global-display-line-numbers-mode)
+
+(use-package lsp-ui)
+
+(global-set-key (kbd "M-.") #'lsp-ui-peek-find-definitions)
+(global-set-key (kbd "M-?") #'lsp-ui-peek-find-references)
+
 
 ;; Indentation for c-code
 (setq c-basic-offset 4)
