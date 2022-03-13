@@ -40,6 +40,7 @@
  '(lsp-java-server-install-dir "c:/Users/Sebastian/Downloads/java_lsp/")
  '(lsp-java-workspace-dir "")
  '(lsp-ui-flycheck-list-position 'right)
+ '(lsp-ui-sideline-enable nil)
  '(lsp-ui-sideline-show-code-actions t)
  '(lsp-ui-sideline-show-hover t)
  '(org-agenda-files '("c:/Users/Sebastian/Documents/OrgFiles"))
@@ -95,7 +96,6 @@
 (global-set-key (kbd "M-.") #'lsp-ui-peek-find-definitions)
 (global-set-key (kbd "M-?") #'lsp-ui-peek-find-references)
 
-
 ;; Indentation for c-code
 (setq c-basic-offset 4)
 
@@ -106,10 +106,12 @@
 
 (setq scroll-margin 10)
 
+(set-default 'truncate-lines t)
+
 ;; org capture
 (setq org-capture-templates
       '(("t" "Todo" entry (file+headline "c:/Users/Sebastian/Documents/OrgFiles/TODO.org" "Tasks")
          "* TODO %?\n  %i\n  %a" :empty-lines 1)
       ("b" "Bugs" entry (file+headline "c:/Users/Sebastian/Documents/OrgFiles/Bugs.org" "Bugs")
          "* TODO %?\n  %i\n  %f" :empty-lines 1))
-      )
+)
